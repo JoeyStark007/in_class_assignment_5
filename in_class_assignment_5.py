@@ -28,15 +28,81 @@ def quicksort(numbers_in_a_list):
 
 #WRITE YOUR CODE HERE FOR THE RECURSIVE SORTING FUNCTION
 
-    return #WHAT DOES IT RETURN?
+    # Base
+    
+    if len(numbers_in_a_list) <= 1:
+        return numbers_in_a_list
+   
+    
+   #sublists
+    list_A = numbers_in_a_list[0:len(numbers_in_a_list) // 2]
+    list_B = numbers_in_a_list[len(numbers_in_a_list) // 2:]
+    
+    #Recursive sublists
+    part1 = quicksort(list_A)
+    part2 = quicksort(list_B)
+    
+    # Sorting and merging two sublists
+    sorted_list = sort_two_list(part1, part2)
+    return sorted_list
 
+def sort_two_list(list_A, list_B):
+    merged_list = []
+    x = 0
+    y = 0
+    while x < len(list_A) and y < len(list_B):
+        if list_A[x] <= list_B[y]:
+            merged_list.append(list_A[x])
+            x += 1
+            continue
+        merged_list.append(list_B[y])
+        y += 1
 
+    while x < len(list_A):
+        merged_list.append(list_A[x])
+        x = x + 1
+        
+    while y < len(list_B):
+        merged_list.append(list_B[y])
+        y = y + 1
+        
+    return merged_list
+  
+    
 def main():
 
 # WRITE YOUR MAIN FUNCTION HERE TO READ IN YOUR numbers.txt FILE, RUN THE LIST THROUGH YOUR SORTING ALGORITHM, 
 # AND WRITE OUT YOUR FILE
 
-    return #WHAT DOES IT RETURN?
+
+    #read file
+    numbers = 'numbers.txt'
+    
+    my_file = open(numbers, 'r')
+    content = my_file.read()
+    
+    #rearrange file into a list of ints
+    adj_content = content.strip('[]')
+    
+    content_list = adj_content.split(",")
+    my_file.close()
+    
+    fixed_list = [eval(i) for i in content_list]
+    
+    #run function on list of ints 
+    final = quicksort(fixed_list) 
+        
+   
+    
+    
+    
+    #Turn result into output file aka write a file 
+    
+    file_name = 'sorted.txt'
+    with open(file_name, 'w') as file_object:
+        return file_object.write(str(final))
+            
+
 
 
 if __name__ == "__main__":
